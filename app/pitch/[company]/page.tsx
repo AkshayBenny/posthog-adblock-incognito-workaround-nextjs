@@ -1,28 +1,26 @@
 'use client'
 import { usePostHog } from 'posthog-js/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useParams } from 'next/navigation'
 
-export default function PitchPage() {
+function PitchTrackerClient() {
 	const posthog = usePostHog()
 	const params = useParams()
 	const [isAuthenticated, setIsAuthenticated] = useState(false)
 	const [password, setPassword] = useState('')
 
-	// Track page view once authenticated
 	useEffect(() => {
-		if (isAuthenticated) {
+		if (isAuthenticated && params?.company) {
 			posthog?.capture('$pageview', {
 				company_target: params.company,
 				deck_type: 'teaser_view',
 			})
 		}
-	}, [isAuthenticated, posthog, params.company])
+	}, [isAuthenticated, posthog, params])
 
 	const handleLogin = (e: React.FormEvent) => {
 		e.preventDefault()
-		// Mock database/password check
-		if (password === 'johndoe') {
+		if (password === 'pioneer2026') {
 			setIsAuthenticated(true)
 			posthog?.identify(`company_${params.company}`)
 		}
@@ -102,5 +100,20 @@ export default function PitchPage() {
 				</a>
 			</div>
 		</div>
+	)
+}
+
+export default function PitchPage() {
+	return (
+		<Suspense
+			fallback={
+				<div className='flex min-h-screen items-center justify-center'>
+					<p className='text-lg text-gray-600'>
+						Loading secure portal...
+					</p>
+				</div>
+			}>
+			<PitchTrackerClient />
+		</Suspense>
 	)
 }
