@@ -1,4 +1,3 @@
-// app/pitch/[company]/page.tsx
 'use client'
 import { usePostHog } from 'posthog-js/react'
 import { useEffect, useState } from 'react'
@@ -23,7 +22,7 @@ export default function PitchPage() {
 	const handleLogin = (e: React.FormEvent) => {
 		e.preventDefault()
 		// Mock database/password check
-		if (password === 'pioneer2026') {
+		if (password === 'johndoe') {
 			setIsAuthenticated(true)
 			posthog?.identify(`company_${params.company}`)
 		}
@@ -71,7 +70,6 @@ export default function PitchPage() {
 				<p className='mb-4'>
 					Review the introductory metrics and social impact vision.
 				</p>
-				{/* Changed to an anchor tag with the download attribute */}
 				<a
 					href='/Kewordal_Sponsor_Teaser_Barclays.pptx'
 					download='Kewordal_Sponsor_Teaser_Barclays.pptx'
@@ -91,7 +89,6 @@ export default function PitchPage() {
 					Unlock the comprehensive breakdown and pioneer sponsorship
 					packages.
 				</p>
-				{/* Changed to an anchor tag with the download attribute */}
 				<a
 					href='/Kewordal_Companies_Deck_Barclays - Send.pptx'
 					download='Kewordal_Companies_Deck_Barclays - Send.pptx'
